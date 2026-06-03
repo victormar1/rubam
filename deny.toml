@@ -43,6 +43,9 @@ allow = [
     "MPL-2.0",
     "Zlib",
     "CC0-1.0",
+    # Permissive BSD-style license of the bzip2/libbzip2 C library, pulled in
+    # transitively (via noodles) for BGZF/bzip2 block support. MIT-compatible.
+    "bzip2-1.0.6",
 ]
 # Explicit denies — keep the manuscript honest about what we refuse.
 exceptions = []
