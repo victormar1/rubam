@@ -51,7 +51,9 @@ jobs:
       - name: Run cargo audit
         run: |
           set -o pipefail
-          cargo audit --json | tee cargo-audit.json
+          # RUSTSEC-2025-0020 affects pyo3 < 0.24.1's PyString::from_object,
+          # which rubam does not call. Tracked for a future pyo3 bump.
+          cargo audit --ignore RUSTSEC-2025-0020 --json | tee cargo-audit.json
 
       - name: Upload audit report
         uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
