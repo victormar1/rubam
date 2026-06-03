@@ -136,22 +136,22 @@ def test_relative_path_resolution():
 
     NOTE on Windows tempdir cleanup: if the cwd is *inside* the TemporaryDirectory
     when the context exits, rmtree fails with WinError 32 because the cwd itself
-    is "in use". We therefore restore cwd manually BEFORE leaving the `with`
-    block (monkeypatch unwinds too late) and additionally use
-    ignore_cleanup_errors=True as a belt-and-suspenders measure.
+    is "in use". We therefore restore cwd manually BEFORE removing the dir,
+    then delete it with shutil.rmtree(ignore_errors=True) — the cross-version
+    equivalent of TemporaryDirectory's 3.10+ ignore_cleanup_errors=True, which
+    is unavailable on the 3.8/3.9 interpreters we still support.
     """
     saved_cwd = os.getcwd()
-    with tempfile.TemporaryDirectory(
-        prefix="rubam_stress_", ignore_cleanup_errors=True
-    ) as td:
-        try:
-            td_path = Path(td)
-            _copy_fixture_to(td_path, "smoke.bam")
-            os.chdir(td_path)
-            _assert_smoke_bam_works("./smoke.bam")
-            _assert_smoke_bam_works("smoke.bam")
-        finally:
-            os.chdir(saved_cwd)
+    td = tempfile.mkdtemp(prefix="rubam_stress_")
+    try:
+        td_path = Path(td)
+        _copy_fixture_to(td_path, "smoke.bam")
+        os.chdir(td_path)
+        _assert_smoke_bam_works("./smoke.bam")
+        _assert_smoke_bam_works("smoke.bam")
+    finally:
+        os.chdir(saved_cwd)
+        shutil.rmtree(td, ignore_errors=True)
 
 
 # ---------------------------------------------------------------------------
