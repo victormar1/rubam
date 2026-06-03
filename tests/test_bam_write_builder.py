@@ -25,6 +25,7 @@ import tempfile
 import pytest
 
 import rubam
+from _wsl_probe import wsl_usable
 
 
 SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fixtures", "smoke.bam")
@@ -250,8 +251,8 @@ def test_to_dict_from_dict_roundtrip(tmp_bam):
 # ---------------------------------------------------------------------------
 
 @pytest.mark.skipif(
-    sys.platform != "win32" or shutil.which("wsl") is None,
-    reason="WSL not available — cross-validation requires system samtools",
+    sys.platform != "win32" or not wsl_usable(),
+    reason="WSL Ubuntu (system samtools) not usable — cross-validation skipped",
 )
 def test_synth_record_validates_against_samtools(tmp_bam):
     """End-to-end: build a single synthetic record from scratch, write

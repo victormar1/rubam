@@ -12,6 +12,8 @@ from pathlib import Path
 
 import pytest
 
+from _wsl_probe import wsl_usable
+
 
 VCF = Path("tests/data/validation_3sample_100rec.vcf.gz")
 
@@ -25,7 +27,7 @@ def _to_wsl(p: Path) -> str:
 
 
 @pytest.mark.skipif(not VCF.exists(), reason="run scripts/build_validation_vcf.sh first")
-@pytest.mark.skipif(shutil.which("wsl") is None, reason="WSL not available")
+@pytest.mark.skipif(not wsl_usable(), reason="WSL Ubuntu (system pysam) not usable")
 def test_rubam_vs_pysam_synth_3sample_100rec():
     rubam_dir = _to_wsl(Path.cwd().resolve())
     vcf_wsl = _to_wsl(VCF)

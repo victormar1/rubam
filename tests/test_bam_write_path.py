@@ -25,6 +25,7 @@ import tempfile
 import pytest
 
 import rubam
+from _wsl_probe import wsl_usable
 
 
 SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fixtures", "smoke.bam")
@@ -116,8 +117,8 @@ def test_write_on_read_mode_errors():
 
 
 @pytest.mark.skipif(
-    sys.platform != "win32" or shutil.which("wsl") is None,
-    reason="WSL not available — cross-validation against system samtools requires it",
+    sys.platform != "win32" or not wsl_usable(),
+    reason="WSL Ubuntu (system samtools) not usable — cross-validation skipped",
 )
 def test_write_cross_validation_with_system_samtools(tmp_bam):
     """The gold-standard test: write a BAM with rubam, then count its records

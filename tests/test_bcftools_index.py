@@ -7,6 +7,7 @@ import pytest
 
 import rubam
 from rubam.tools import bcftools
+from _wsl_probe import wsl_usable
 
 
 _TINY_VCF = """##fileformat=VCFv4.3
@@ -33,8 +34,8 @@ def vcf_gz(tmp_path):
     plain = tmp_path / "tiny.vcf"
     plain.write_text(_TINY_VCF)
     gz = tmp_path / "tiny.vcf.gz"
-    if shutil.which("wsl") is None:
-        pytest.skip("WSL not available — bgzip required")
+    if not wsl_usable():
+        pytest.skip("WSL Ubuntu (bgzip) not usable")
     subprocess.check_call(
         ["wsl", "-d", "Ubuntu", "bash", "-lc",
          f"bgzip -c {_to_wsl(plain)} > {_to_wsl(gz)}"]

@@ -6,6 +6,7 @@ from pathlib import Path
 import pytest
 import rubam
 from rubam.tools import bcftools
+from _wsl_probe import wsl_usable
 
 
 _MULTI_VCF = """##fileformat=VCFv4.3
@@ -73,8 +74,8 @@ def _to_wsl(p):
 @pytest.fixture
 def reference_fa(tmp_path):
     """Tiny FASTA: chr1 = AAACGTACGTACGT (14 bp) for tests."""
-    if shutil.which("wsl") is None:
-        pytest.skip("WSL needed for samtools faidx")
+    if not wsl_usable():
+        pytest.skip("WSL Ubuntu (samtools faidx) not usable")
     fa = tmp_path / "ref.fa"
     fa.write_text(">chr1\nAAACGTACGTACGT\n")
     # Build .fai via samtools (WSL)
