@@ -1,0 +1,16 @@
+# Normalize line endings: text files are LF in the repo, checked out
+# natively. Keeps Windows checkouts from churning every source file.
+* text=auto eol=lf
+
+# Binary fixtures and assets — never touch.
+*.bam binary
+*.bai binary
+*.cram binary
+*.crai binary
+*.pdf binary
+*.png binary
+*.pyd binary
+*.so binary
+
+# Shell scripts must stay LF even on Windows checkouts.
+*.sh text eol=lf

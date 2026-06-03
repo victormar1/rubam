@@ -1,0 +1,69 @@
+##fileformat=VCFv4.3
+##contig=<ID=chr1,length=10000000>
+##INFO=<ID=DP,Number=1,Type=Integer,Description="Total depth">
+##INFO=<ID=AF,Number=A,Type=Float,Description="Per-alt allele frequency">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Read depth">
+##FORMAT=<ID=GQ,Number=1,Type=Integer,Description="Genotype quality">
+##FILTER=<ID=PASS,Description="All filters passed">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	SAMP1	SAMP2
+chr1	100	.	A	G	30	PASS	DP=20;AF=0.5	GT:DP:GQ	0/1:30:99	./.:.:.
+chr1	200	.	C	T	.	PASS	DP=.;AF=.	GT:DP:GQ	./.:.:.	1/1:25:99
+chr1	300	.	G	A	40	PASS	DP=15	GT:DP:GQ	0/0:20:.	./.:.:.
+chr1	400	.	T	C	.	.	.	GT:DP:GQ	./.:.:.	./.:.:.
+chr1	500	.	A	T	50	PASS	DP=30	GT:DP:GQ	1/1:.:99	0/1:25:.
+chr1	1000	.	A	C	25	PASS	DP=15;AF=0.1	GT:DP:GQ	0/1:15:99	./.:.:.
+chr1	1500	.	C	G	30	PASS	DP=.;AF=.	GT:DP:GQ	./.:.:.	1/1:16:99
+chr1	2000	.	G	T	35	PASS	DP=17	GT:DP:GQ	0/0:17:.	./.:.:.
+chr1	2500	.	T	A	.	.	.	GT:DP:GQ	./.:.:.	./.:.:.
+chr1	3000	.	A	G	45	PASS	DP=19	GT:DP:GQ	1/1:.:99	0/1:19:.
+chr1	3500	.	C	T	50	PASS	DP=20;AF=0.6	GT:DP:GQ	0/1:.:99	1/0:20:99
+chr1	4000	.	G	A	55	PASS	DP=21;AF=0.7	GT:DP:GQ	0/1:21:99	./.:.:.
+chr1	4500	.	T	C	60	PASS	DP=.;AF=.	GT:DP:GQ	./.:.:.	1/1:22:99
+chr1	5000	.	A	T	65	PASS	DP=23	GT:DP:GQ	0/0:23:.	./.:.:.
+chr1	5500	.	C	A	.	.	.	GT:DP:GQ	./.:.:.	./.:.:.
+chr1	6000	.	G	C	25	PASS	DP=25	GT:DP:GQ	1/1:.:99	0/1:25:.
+chr1	6500	.	T	G	30	PASS	DP=26;AF=0.3	GT:DP:GQ	0/1:.:99	1/0:26:99
+chr1	7000	.	A	C	35	PASS	DP=27;AF=0.4	GT:DP:GQ	0/1:27:99	./.:.:.
+chr1	7500	.	C	G	40	PASS	DP=.;AF=.	GT:DP:GQ	./.:.:.	1/1:28:99
+chr1	8000	.	G	T	45	PASS	DP=29	GT:DP:GQ	0/0:29:.	./.:.:.
+chr1	8500	.	T	A	.	.	.	GT:DP:GQ	./.:.:.	./.:.:.
+chr1	9000	.	A	G	55	PASS	DP=31	GT:DP:GQ	1/1:.:99	0/1:31:.
+chr1	9500	.	C	T	60	PASS	DP=32;AF=0.9	GT:DP:GQ	0/1:.:99	1/0:32:99
+chr1	10000	.	G	A	65	PASS	DP=33;AF=0.1	GT:DP:GQ	0/1:33:99	./.:.:.
+chr1	10500	.	T	C	70	PASS	DP=.;AF=.	GT:DP:GQ	./.:.:.	1/1:34:99
+chr1	11000	.	A	T	25	PASS	DP=35	GT:DP:GQ	0/0:35:.	./.:.:.
+chr1	11500	.	C	A	.	.	.	GT:DP:GQ	./.:.:.	./.:.:.
+chr1	12000	.	G	C	35	PASS	DP=37	GT:DP:GQ	1/1:.:99	0/1:37:.
+chr1	12500	.	T	G	40	PASS	DP=38;AF=0.6	GT:DP:GQ	0/1:.:99	1/0:38:99
+chr1	13000	.	A	C	45	PASS	DP=39;AF=0.7	GT:DP:GQ	0/1:39:99	./.:.:.
+chr1	13500	.	C	G	50	PASS	DP=.;AF=.	GT:DP:GQ	./.:.:.	1/1:40:99
+chr1	14000	.	G	T	55	PASS	DP=41	GT:DP:GQ	0/0:41:.	./.:.:.
+chr1	14500	.	T	A	.	.	.	GT:DP:GQ	./.:.:.	./.:.:.
+chr1	15000	.	A	G	65	PASS	DP=43	GT:DP:GQ	1/1:.:99	0/1:43:.
+chr1	15500	.	C	T	70	PASS	DP=44;AF=0.3	GT:DP:GQ	0/1:.:99	1/0:44:99
+chr1	16000	.	G	A	25	PASS	DP=15;AF=0.4	GT:DP:GQ	0/1:15:99	./.:.:.
+chr1	16500	.	T	C	30	PASS	DP=.;AF=.	GT:DP:GQ	./.:.:.	1/1:16:99
+chr1	17000	.	A	T	35	PASS	DP=17	GT:DP:GQ	0/0:17:.	./.:.:.
+chr1	17500	.	C	A	.	.	.	GT:DP:GQ	./.:.:.	./.:.:.
+chr1	18000	.	G	C	45	PASS	DP=19	GT:DP:GQ	1/1:.:99	0/1:19:.
+chr1	18500	.	T	G	50	PASS	DP=20;AF=0.9	GT:DP:GQ	0/1:.:99	1/0:20:99
+chr1	19000	.	A	C	55	PASS	DP=21;AF=0.1	GT:DP:GQ	0/1:21:99	./.:.:.
+chr1	19500	.	C	G	60	PASS	DP=.;AF=.	GT:DP:GQ	./.:.:.	1/1:22:99
+chr1	20000	.	G	T	65	PASS	DP=23	GT:DP:GQ	0/0:23:.	./.:.:.
+chr1	20500	.	T	A	.	.	.	GT:DP:GQ	./.:.:.	./.:.:.
+chr1	21000	.	A	G	25	PASS	DP=25	GT:DP:GQ	1/1:.:99	0/1:25:.
+chr1	21500	.	C	T	30	PASS	DP=26;AF=0.6	GT:DP:GQ	0/1:.:99	1/0:26:99
+chr1	22000	.	G	A	35	PASS	DP=27;AF=0.7	GT:DP:GQ	0/1:27:99	./.:.:.
+chr1	22500	.	T	C	40	PASS	DP=.;AF=.	GT:DP:GQ	./.:.:.	1/1:28:99
+chr1	23000	.	A	T	45	PASS	DP=29	GT:DP:GQ	0/0:29:.	./.:.:.
+chr1	23500	.	C	A	.	.	.	GT:DP:GQ	./.:.:.	./.:.:.
+chr1	24000	.	G	C	55	PASS	DP=31	GT:DP:GQ	1/1:.:99	0/1:31:.
+chr1	24500	.	T	G	60	PASS	DP=32;AF=0.3	GT:DP:GQ	0/1:.:99	1/0:32:99
+chr1	25000	.	A	C	65	PASS	DP=33;AF=0.4	GT:DP:GQ	0/1:33:99	./.:.:.
+chr1	25500	.	C	G	70	PASS	DP=.;AF=.	GT:DP:GQ	./.:.:.	1/1:34:99
+chr1	26000	.	G	T	25	PASS	DP=35	GT:DP:GQ	0/0:35:.	./.:.:.
+chr1	26500	.	T	A	.	.	.	GT:DP:GQ	./.:.:.	./.:.:.
+chr1	27000	.	A	G	35	PASS	DP=37	GT:DP:GQ	1/1:.:99	0/1:37:.
+chr1	27500	.	C	T	40	PASS	DP=38;AF=0.9	GT:DP:GQ	0/1:.:99	1/0:38:99
+chr1	28000	.	G	A	45	PASS	DP=39;AF=0.1	GT:DP:GQ	0/1:39:99	./.:.:.

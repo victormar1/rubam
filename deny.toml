@@ -1,0 +1,74 @@
+# cargo-deny configuration for rubam
+# https://embarkstudios.github.io/cargo-deny/
+#
+# Run locally with: cargo deny check
+# Enforced in CI via .github/workflows/security.yml
+
+[graph]
+# Check all targets — rubam ships on Linux, macOS, Windows.
+all-features = false
+no-default-features = false
+
+[output]
+feature-depth = 1
+
+# ---------------------------------------------------------------------------
+# Advisories — refuse to build with any known vulnerability or yanked crate.
+# ---------------------------------------------------------------------------
+[advisories]
+version = 2
+db-path = "~/.cargo/advisory-db"
+db-urls = ["https://github.com/rustsec/advisory-db"]
+yanked = "deny"
+ignore = []
+
+# ---------------------------------------------------------------------------
+# Licenses — explicit allowlist. GPL/AGPL are denied because rubam ships
+# under MIT and we cannot relicense transitively.
+# ---------------------------------------------------------------------------
+[licenses]
+version = 2
+confidence-threshold = 0.93
+allow = [
+    "MIT",
+    "Apache-2.0",
+    "Apache-2.0 WITH LLVM-exception",
+    "BSD-3-Clause",
+    "BSD-2-Clause",
+    "ISC",
+    "Unicode-DFS-2016",
+    "Unicode-3.0",
+    "MPL-2.0",
+    "Zlib",
+    "CC0-1.0",
+]
+# Explicit denies — keep the manuscript honest about what we refuse.
+exceptions = []
+
+[[licenses.clarify]]
+name = "ring"
+expression = "MIT AND ISC AND OpenSSL"
+license-files = [{ path = "LICENSE", hash = 0xbd0eed23 }]
+
+# ---------------------------------------------------------------------------
+# Bans — warn on duplicate major versions of the same crate (bloat / drift).
+# ---------------------------------------------------------------------------
+[bans]
+multiple-versions = "warn"
+wildcards = "deny"
+highlight = "all"
+workspace-default-features = "allow"
+external-default-features = "allow"
+allow = []
+deny = []
+skip = []
+skip-tree = []
+
+# ---------------------------------------------------------------------------
+# Sources — only crates.io. No git deps, no alternative registries.
+# ---------------------------------------------------------------------------
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+allow-git = []

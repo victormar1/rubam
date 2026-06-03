@@ -1,0 +1,64 @@
+name: fuzz-nightly
+
+# cargo-fuzz only supports Linux reliably: it relies on libFuzzer's
+# sanitizer instrumentation, which is broken on Windows MSVC and gated
+# on macOS by SIP/codesign quirks. Running fuzz on Linux nightly is the
+# standard configuration for rust-fuzz/cargo-fuzz projects.
+
+on:
+  schedule:
+    # Every day at 03:17 UTC. Offset minutes to avoid the on-the-hour rush.
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fuzz:
+    name: fuzz / ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - fuzz_bam_reader
+          - fuzz_vcf_parser
+          - fuzz_cigar_walker
+          - fuzz_aux_tags
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Install Rust nightly
+        uses: dtolnay/rust-toolchain@b3b07ba8b418998c39fb20f53e8b695cdcc8de1b # nightly
+        with:
+          toolchain: nightly
+          components: rust-src
+
+      - name: Install cargo-fuzz
+        run: cargo install cargo-fuzz --locked
+
+      - name: Cache fuzz corpora
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: |
+            fuzz/corpus
+            fuzz/artifacts
+          key: fuzz-${{ matrix.target }}-${{ github.run_id }}
+          restore-keys: |
+            fuzz-${{ matrix.target }}-
+
+      - name: Run ${{ matrix.target }} for 300 seconds
+        working-directory: ${{ github.workspace }}
+        run: |
+          cargo +nightly fuzz run ${{ matrix.target }} \
+            -- -max_total_time=300 -timeout=25 -rss_limit_mb=2048
+
+      - name: Upload artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: fuzz-artifacts-${{ matrix.target }}
+          path: fuzz/artifacts/${{ matrix.target }}/
+          if-no-files-found: ignore

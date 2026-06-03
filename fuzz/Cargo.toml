@@ -1,0 +1,63 @@
+[package]
+name = "rubam-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+# Break this crate out of any potential parent workspace so a stray
+# `cargo` invocation from the rubam root doesn't try to compile fuzz
+# targets (which require nightly + libFuzzer).
+[workspace]
+
+[package.metadata]
+# This crate is intentionally excluded from the workspace and from any
+# release artefacts. It only exists for `cargo fuzz`. Do NOT add it to
+# the root Cargo.toml `[workspace]` table.
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+arbitrary = { version = "1", features = ["derive"] }
+# We fuzz the parsers that rubam wraps (noodles) directly rather than
+# linking against the rubam crate itself: rubam is built with
+# `pyo3 features = ["extension-module"]`, which on Linux produces an
+# rlib that expects libpython to be provided at load time. Linking that
+# rlib into a libfuzzer binary breaks the fuzz harness build. The set
+# of parsers exercised below is exactly the set rubam uses, so this
+# still validates "rubam's parser robustness".
+noodles = { version = "0.107", features = [
+    "bam",
+    "bcf",
+    "bgzf",
+    "core",
+    "sam",
+    "vcf",
+] }
+
+[[bin]]
+name = "fuzz_bam_reader"
+path = "fuzz_targets/fuzz_bam_reader.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "fuzz_vcf_parser"
+path = "fuzz_targets/fuzz_vcf_parser.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "fuzz_cigar_walker"
+path = "fuzz_targets/fuzz_cigar_walker.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "fuzz_aux_tags"
+path = "fuzz_targets/fuzz_aux_tags.rs"
+test = false
+doc = false
+bench = false

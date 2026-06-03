@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use rubam in academic work, please cite it as below."
+title: rubam
+abstract: >-
+  Pure-Rust BAM/VCF/BCF depth, pileup, variants and statistics with Python
+  bindings. Multi-threaded, with bit-exact parity against samtools and pysam,
+  and native wheels for Linux, macOS and Windows — no htslib, no WSL.
+type: software
+authors:
+  - given-names: Victor
+    family-names: Marin
+version: 0.3.12
+date-released: "2026-06-03"
+license: MIT
+repository-code: "https://github.com/victormar1/rubam"
+url: "https://github.com/victormar1/rubam"
+keywords:
+  - bioinformatics
+  - bam
+  - cram
+  - vcf
+  - genomics
+  - rust
+  - pysam
+  - pileup
+  - coverage

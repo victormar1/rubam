@@ -1,0 +1,54 @@
+[build-system]
+requires = ["maturin>=1.0,<2"]
+build-backend = "maturin"
+
+[project]
+name = "rubam"
+version = "0.3.12"
+authors = [
+    { name = "Victor Marin", email = "civi64@gmail.com" }
+]
+description = "Pure-Rust BAM/CRAM depth, pileup and stats — fast, multi-threaded, Windows-native. Originally forked from rustbam."
+readme = "README.md"
+license = { text = "MIT" }
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Rust",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+requires-python = ">=3.8"
+keywords = ["bam", "cram", "bioinformatics", "genomics", "rust", "windows", "pileup", "coverage"]
+
+# `get_depths_numpy` returns NumPy arrays and needs NumPy at runtime; every
+# other entry point works without it. Install with `pip install rubam[numpy]`.
+[project.optional-dependencies]
+numpy = ["numpy>=1.21"]
+
+[project.urls]
+Homepage = "https://github.com/victormar1/rubam"
+Repository = "https://github.com/victormar1/rubam"
+Issues = "https://github.com/victormar1/rubam/issues"
+
+[project.scripts]
+rubam = "rubam.cli:main"
+
+[tool.maturin]
+bindings = "pyo3"
+module-name = "rubam._rubam"
+features = ["pyo3/extension-module", "pyo3/abi3-py38"]
+include = [
+    { path = "tests/fixtures/smoke.bam",     format = "wheel" },
+    { path = "tests/fixtures/smoke.bam.bai", format = "wheel" },
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

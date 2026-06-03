@@ -1,0 +1,91 @@
+[package]
+name = "rubam"
+version = "0.3.12"
+edition = "2021"
+authors = ["Victor Marin <civi64@gmail.com>"]
+license = "MIT"
+description = "Pure-Rust BAM/VCF/BCF depth, pileup, variants and stats with Python bindings — Windows / Linux / macOS native. CRAM is experimental (header reading; record decode is panic-guarded and returns a Python error on unsupported codecs)."
+repository = "https://github.com/victormar1/rubam"
+readme = "README.md"
+keywords = ["bioinformatics", "bam", "cram", "genomics", "noodles"]
+categories = ["science::bioinformatics::genomics", "command-line-utilities"]
+exclude = [
+    "bench/**",
+    "paper/**",
+    "scripts/**",
+    "Dockerfile",
+    "CLAUDE.md",
+    ".github/**",
+    ".claude/**",
+    "data/**",
+    "results/**",
+    "rubam/_rubam.pyd",
+    "rubam/_rubam.so",
+]
+
+[dependencies]
+noodles = { version = "0.107", features = [
+    "bam",
+    "bcf",
+    "bgzf",
+    "core",
+    "cram",
+    "csi",
+    "fasta",
+    "fastq",
+    "sam",
+    "tabix",
+    "vcf",
+] }
+pyo3 = { version = "0.23", features = ["extension-module", "abi3-py38", "multiple-pymethods"], optional = true }
+numpy = { version = "0.23", optional = true }
+rayon = "1.8"
+thiserror = "2"
+flate2 = "1"
+
+[features]
+default = ["python"]
+# `python` enables the pyo3 bindings + NumPy zero-copy return paths.
+# Build the standalone CLI binaries (`rubam-depth`, `rubam-samtools`,
+# `rubam-bcftools`, `rubam-synth-bam`) with `--no-default-features` to
+# avoid the Windows `python3.dll` runtime dependency that pyo3 pulls in.
+python = ["dep:pyo3", "dep:numpy"]
+
+[dev-dependencies]
+proptest = "1"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+name = "rubam"
+path = "src/lib.rs"
+
+[[test]]
+name = "integration_test"
+path = "tests/integration_test.rs"
+
+[[test]]
+name = "api_smoke"
+path = "tests/api_smoke.rs"
+
+[[bin]]
+name = "rubam-synth-bam"
+path = "src/bin/synth_bam.rs"
+required-features = []
+
+[[bin]]
+name = "rubam-depth"
+path = "src/bin/depth.rs"
+required-features = []
+
+[[bin]]
+name = "rubam-samtools"
+path = "src/bin/samtools.rs"
+
+[[bin]]
+name = "rubam-bcftools"
+path = "src/bin/bcftools.rs"
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+opt-level = 3
