@@ -47,7 +47,7 @@ jobs:
           toolchain: stable
 
       - name: Build wheel (maturin, abi3)
-        uses: PyO3/maturin-action@e10f6c464b90acceb5f640d31beda6d586ba7b4a # v1.49.3
+        uses: PyO3/maturin-action@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b # v1.51.0
         with:
           command: build
           target: ${{ matrix.os == 'macos-latest' && 'universal2-apple-darwin' || '' }}
@@ -72,7 +72,7 @@ jobs:
           ref: ${{ github.event.inputs.tag || github.ref }}
 
       - name: Build sdist (maturin)
-        uses: PyO3/maturin-action@e10f6c464b90acceb5f640d31beda6d586ba7b4a # v1.49.3
+        uses: PyO3/maturin-action@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b # v1.51.0
         with:
           command: sdist
           args: --out dist
