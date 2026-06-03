@@ -30,7 +30,7 @@ __pycache__
 .venv/
 venv/
 
-# Datasets and bench outputs (huge — kept on D:\Victor\rubam\data and \results)
+# Datasets and bench outputs (huge — kept locally under data/ and results/)
 data/
 results/
 *.bam

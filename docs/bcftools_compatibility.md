@@ -47,7 +47,7 @@ Status legend:
 
 The "100 %" numbers above refer to a canonical 7-tuple
 `(CHROM, POS, REF, ALT, ID, QUAL, FILTER)` plus the scalar INFO/FORMAT
-fields named in `tests/test_bcftools_cli.py`. For exhaustive field-level
+fields named in the `tests/test_bcftools_*.py` suite. For exhaustive field-level
 behaviour (Number=A/R/G, missing values, BND, phased GT), see
 `docs/vcf_conformance_matrix.md`, which is the authoritative source.
 
@@ -64,15 +64,17 @@ behaviour (Number=A/R/G, missing values, BND, phased GT), see
 ## Reproducing this matrix
 
 ```bash
-# From the rubam repo root, with rubam installed in .venv/ and bcftools on PATH.
-bash tests/bcftools_cli/run_matrix.sh > tests/bcftools_cli/results.txt
-diff tests/bcftools_cli/expected.txt tests/bcftools_cli/results.txt
+# From the rubam repo root, with rubam installed in your venv and bcftools on PATH.
+# Python subcommand parity (view/norm/concat/query/index/sort/stats):
+python -m pytest tests/test_bcftools_*.py -v
+# Rust-side shadow-CLI cross-check against system bcftools:
+cargo test --release --no-default-features --test cargo_bcftools_cli
 ```
 
 ## Maintenance rule
 
 If a row's `rubam status` changes from `none` → `partial` → `full`, a
-corresponding test in `tests/test_bcftools_cli.py` must be added or
+corresponding test in the `tests/test_bcftools_*.py` suite must be added or
 updated **in the same PR**. The manuscript figure that quotes any
 bcftools-equivalence numbers must reference this matrix and cite the
 exact commit hash.
