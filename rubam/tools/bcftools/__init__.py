@@ -5,6 +5,8 @@ function takes the same arguments as the corresponding bcftools subcommand
 whenever possible. Implementations are filled in across tasks B2..B8.
 """
 
+from __future__ import annotations
+
 from rubam._rubam import bcftools_view as _view
 from rubam._rubam import bcftools_sort as _sort_bcf
 from rubam._rubam import bcftools_index as _bcftools_index

@@ -5,6 +5,8 @@ the same arguments as the corresponding samtools subcommand whenever possible.
 Implementations are filled in across tasks B2..B8.
 """
 
+from __future__ import annotations
+
 from rubam._rubam import calmd as _calmd
 from rubam._rubam import faidx as _faidx
 from rubam._rubam import flag_stats as _flag_stats_v01

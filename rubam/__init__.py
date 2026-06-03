@@ -5,6 +5,8 @@ now an independent project with a pure-Rust backend (noodles), full
 Windows / Linux / macOS support, and an extended feature surface.
 """
 
+from __future__ import annotations
+
 from ._rubam import (
     AlignedSegment,
     AlignmentFile,
