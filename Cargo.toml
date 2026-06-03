@@ -24,7 +24,7 @@ exclude = [
 ]
 
 [dependencies]
-noodles = { version = "0.107", features = [
+noodles = { version = "0.111", features = [
     "bam",
     "bcf",
     "bgzf",
