@@ -23,6 +23,10 @@ const FLAG_SUPPLEMENTARY: u16 = 0x800;
 
 /// Count records in a region matching the given filters.
 ///
+/// `start`/`end` are **1-based and inclusive** (like all free `rubam.*`
+/// functions); `AlignmentFile.count()` takes **0-based half-open** coordinates
+/// (pysam convention), so `count_reads(.., 101, 120)` covers `af.count(.., 100, 120)`.
+///
 /// `flag_required` and `flag_filtered` follow the standard SAM convention:
 /// a record is kept iff `(record.flags & flag_required) == flag_required`
 /// and `(record.flags & flag_filtered) == 0`.

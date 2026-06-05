@@ -16,6 +16,11 @@ use crate::common::{open_indexed, read_header_indexed, validate_chrom};
 /// Returns a 7-tuple `(positions, a, c, g, t, n, depth)` where `depth = a+c+g+t+n`.
 /// Each list has the same length as `positions`. `n` includes both `N` bases and
 /// any base that does not match `A/C/G/T/N` after upper-casing.
+///
+/// `start`/`end` are **1-based and inclusive** (like all free `rubam.*`
+/// functions). The `AlignmentFile.pileup()` method, by contrast, takes
+/// **0-based half-open** coordinates (pysam convention) and shifts internally,
+/// so `pileup_bases(.., 101, 200)` covers `af.pileup(.., 100, 200)`.
 #[pyfunction]
 #[pyo3(signature = (
     bam_path,
@@ -26,7 +31,7 @@ use crate::common::{open_indexed, read_header_indexed, validate_chrom};
     min_mapq = 0,
     min_bq = 13,
     max_depth = 8000,
-    num_threads = 12,
+    num_threads = 4,
     flag_filter = 0x704,
 ))]
 #[allow(clippy::too_many_arguments, clippy::type_complexity)]

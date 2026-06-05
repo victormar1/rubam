@@ -958,6 +958,12 @@ impl AlignmentFile {
     /// its quality is `>= quality_threshold`), `read_callback='all'` (skip
     /// `UNMAP | SECONDARY | QCFAIL | DUP`, i.e. the `0x704` mask), and **no**
     /// depth cap — pysam's `count_coverage` never truncates coverage.
+    ///
+    /// Note the base-quality parameter naming: `count_coverage` uses
+    /// `quality_threshold` (default **15**, pysam's default), whereas the depth
+    /// and pileup entry points (`get_depths*`, `pileup`, `pileup_bases`) use
+    /// `min_bq` (default **13**, matching `samtools depth -q 13`). Same concept,
+    /// different name and default — set them explicitly if you need them equal.
     #[pyo3(signature = (contig, start, end, *, quality_threshold = 15, read_callback = "all", num_threads = 4))]
     fn count_coverage(
         &self,

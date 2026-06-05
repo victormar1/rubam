@@ -167,7 +167,7 @@ fn compute_depths_internal(
     min_mapq = 0,
     min_bq = 13,
     max_depth = 8000,
-    num_threads = 12,
+    num_threads = 4,
     memory_mode = None,
 ))]
 #[allow(clippy::too_many_arguments)]
@@ -219,7 +219,7 @@ pub fn get_depths(
     min_mapq = 0,
     min_bq = 13,
     max_depth = 8000,
-    num_threads = 12,
+    num_threads = 4,
     memory_mode = None,
 ))]
 #[allow(clippy::too_many_arguments)]
@@ -253,7 +253,9 @@ pub fn get_depths_numpy<'py>(
 
 /// Batch version: compute depth for many regions, parallelizing across regions.
 ///
-/// Returns one `(positions, depths)` per region, in the same order as input.
+/// Each region's `(chromosome, start, end)` uses **1-based inclusive**
+/// coordinates, as in `get_depths`. Returns one `(positions, depths)` per
+/// region, in the same order as input.
 #[cfg(feature = "python")]
 #[pyfunction]
 #[pyo3(signature = (
@@ -263,7 +265,7 @@ pub fn get_depths_numpy<'py>(
     min_mapq = 0,
     min_bq = 13,
     max_depth = 8000,
-    num_threads = 12,
+    num_threads = 4,
 ))]
 #[allow(clippy::too_many_arguments)]
 pub fn get_depths_regions(

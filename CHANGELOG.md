@@ -6,7 +6,31 @@ versioning follows [SemVer](https://semver.org/) starting at v0.3.0.
 
 ## [Unreleased]
 
-(nothing pending.)
+### Changed
+
+- **`num_threads` default unified to 4.** The free functions
+  (`get_depths`, `get_depths_numpy`, `get_depths_regions`, `pileup_bases`)
+  previously defaulted to `num_threads=12` while the `AlignmentFile` methods
+  (`pileup`, `count_coverage`) used `4` — the same operation silently ran on a
+  different number of threads depending on the entry point, and the hardcoded
+  12 oversubscribed on machines with fewer cores. All entry points now default
+  to `4`. Pass `num_threads=` explicitly for full control (benchmarks set it
+  explicitly and are unaffected).
+
+### Documentation — API consistency audit
+
+- Documented the **count trap**: the free `count_reads()` defaults to the
+  samtools `flag_filtered=0x704` mask (skips unmapped/secondary/qcfail/dup),
+  whereas `AlignmentFile.count()` defaults to pysam's `read_callback='nofilter'`
+  (counts everything), so the two return different totals on the same region by
+  default. Both docstrings now say so, note the `flag_filtered=0` escape hatch,
+  and a regression test locks the contract.
+- Documented the **coordinate convention**: free `rubam.*` functions take
+  **1-based inclusive** `start`/`end`; the `AlignmentFile` methods take
+  **0-based half-open** coordinates (pysam convention) and shift internally.
+- Documented the **base-quality parameter split**: `min_bq` (default 13,
+  `samtools depth`-style) for the depth/pileup entry points vs
+  `quality_threshold` (default 15, pysam-style) for `count_coverage`.
 
 ## [0.3.12] — 2026-06-03
 
