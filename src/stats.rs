@@ -26,6 +26,17 @@ const FLAG_SUPPLEMENTARY: u16 = 0x800;
 /// `flag_required` and `flag_filtered` follow the standard SAM convention:
 /// a record is kept iff `(record.flags & flag_required) == flag_required`
 /// and `(record.flags & flag_filtered) == 0`.
+///
+/// **Default semantics differ from `AlignmentFile.count()` -- read this.**
+/// This free function defaults to `flag_filtered=0x704`, i.e. it *excludes*
+/// unmapped (0x4), secondary (0x100), QC-fail (0x200) and duplicate (0x400)
+/// records (supplementary records are still counted). That is the
+/// `samtools`-style mask. `AlignmentFile.count()`, by contrast, defaults to
+/// pysam's `read_callback='nofilter'` and counts *every* record in the
+/// region. The two therefore return different totals on the same region by
+/// default -- e.g. 7 here vs 8 from the method when a secondary alignment is
+/// present. For pysam-equivalent counting, call `count_reads(..., flag_filtered=0)`;
+/// for the samtools-style total from the method, pass `read_callback='all'`.
 #[pyfunction]
 #[pyo3(signature = (
     bam_path,

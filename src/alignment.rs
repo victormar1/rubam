@@ -847,6 +847,11 @@ impl AlignmentFile {
     /// applies the `0x704` mask (skip `UNMAP | SECONDARY | QCFAIL | DUP`).
     /// `flag_required` / `flag_filtered` remain available for explicit control
     /// and, when `flag_filtered` is given, it overrides `read_callback`.
+    ///
+    /// Note: the free `count_reads()` function defaults to the *opposite*,
+    /// samtools-style `flag_filtered=0x704` (skips secondary/dup/qcfail/unmap),
+    /// so `count_reads(...)` and `samfile.count(...)` can return different
+    /// totals on the same region by default. This is intentional, not a bug.
     #[pyo3(signature = (contig, start = None, end = None, *, read_callback = "nofilter", min_mapq = 0, flag_required = 0, flag_filtered = None))]
     fn count(
         &self,

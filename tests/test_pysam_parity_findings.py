@@ -107,6 +107,23 @@ def test_count_read_callback_all():
         assert af.count("chr1", 100, 120, read_callback="nofilter") == 10
 
 
+def test_free_count_reads_default_diverges_from_method():
+    # The "count trap": the free count_reads() defaults to the samtools 0x704
+    # mask (excludes secondary/dup/qcfail/unmap), whereas AlignmentFile.count()
+    # defaults to pysam's 'nofilter' (counts everything). They diverge on the
+    # same region by design. count_reads is 1-based inclusive; the method is
+    # 0-based half-open, so count_reads(101, 120) covers af.count(.., 100, 120).
+    free_default = rubam.count_reads(PARITY_BAM, "chr1", 101, 120)
+    free_nofilter = rubam.count_reads(PARITY_BAM, "chr1", 101, 120, flag_filtered=0)
+    with rubam.AlignmentFile(PARITY_BAM, "rb") as af:
+        method_default = af.count("chr1", 100, 120)
+    assert free_default == 7              # samtools 0x704 default
+    assert method_default == 10           # pysam nofilter default
+    assert free_default < method_default  # the documented trap
+    # documented escape hatch: flag_filtered=0 reconciles the free fn with the method
+    assert free_nofilter == method_default == 10
+
+
 def test_count_coverage_default_quality_threshold_15():
     # First position has 5 reads with base-quality >= 15 (q15,q16,q20,q20 + the
     # boundary q15 read) under the default 'all' filter.
