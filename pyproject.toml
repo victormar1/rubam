@@ -44,7 +44,7 @@ rubam = "rubam.cli:main"
 [tool.maturin]
 bindings = "pyo3"
 module-name = "rubam._rubam"
-features = ["pyo3/extension-module", "pyo3/abi3-py38"]
+features = ["python", "pyo3/extension-module", "pyo3/abi3-py38"]
 include = [
     { path = "tests/fixtures/smoke.bam",     format = "wheel" },
     { path = "tests/fixtures/smoke.bam.bai", format = "wheel" },

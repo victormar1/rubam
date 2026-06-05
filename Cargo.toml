@@ -44,7 +44,10 @@ thiserror = "2"
 flate2 = "1"
 
 [features]
-default = ["python"]
+# Default is the pure-Rust surface so `cargo add rubam` pulls no pyo3/numpy
+# and needs no Python toolchain. The `python` feature (enabled by maturin for
+# the wheel) adds the pyo3 bindings + NumPy zero-copy return paths.
+default = []
 # `python` enables the pyo3 bindings + NumPy zero-copy return paths.
 # Build the standalone CLI binaries (`rubam-depth`, `rubam-samtools`,
 # `rubam-bcftools`, `rubam-synth-bam`) with `--no-default-features` to
