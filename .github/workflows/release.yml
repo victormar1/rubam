@@ -147,7 +147,6 @@ jobs:
     name: publish to PyPI
     needs: [wheels, sdist]
     runs-on: ubuntu-latest
-    environment: pypi
     permissions:
       id-token: write
     steps:
