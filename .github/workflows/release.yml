@@ -156,7 +156,10 @@ jobs:
           path: dist
           merge-multiple: true
       - name: Publish to PyPI (trusted publishing)
-        uses: pypa/gh-action-pypi-publish@6733eb7d741f0b11ec6a39b58540dab7590f9b7d # v1.14.0
+        # NB: this is a Docker action whose image is tagged by version, not by
+        # commit SHA, so it must be pinned to a release tag — SHA-pinning makes
+        # the ghcr.io image pull fail with "manifest unknown".
+        uses: pypa/gh-action-pypi-publish@v1.14.0
         with:
           packages-dir: dist
 
