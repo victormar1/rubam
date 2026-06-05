@@ -6,8 +6,17 @@ versioning follows [SemVer](https://semver.org/) starting at v0.3.0.
 
 ## [Unreleased]
 
+(nothing pending.)
+
+## [0.3.13] — 2026-06-05
+
 ### Changed
 
+- **`cargo add rubam` now pulls a pure-Rust crate by default.** The crate's
+  default feature set is now empty (`default = []`); the `python` feature
+  (pyo3 + NumPy bindings) is opt-in and is enabled by maturin when building the
+  wheel. Rust consumers therefore no longer drag in pyo3/NumPy or need a Python
+  toolchain to `cargo build`. The published Python wheels are unchanged.
 - **`num_threads` default unified to 4.** The free functions
   (`get_depths`, `get_depths_numpy`, `get_depths_regions`, `pileup_bases`)
   previously defaulted to `num_threads=12` while the `AlignmentFile` methods

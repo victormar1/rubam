@@ -945,13 +945,13 @@ utils = _UtilsShim()
 
 class _VersionShim:
     """Mirrors `pysam.version` — exposes `__version__` and `__samtools_version__`."""
-    __version__ = __version__ if "__version__" in dir() else "0.3.12"
+    __version__ = __version__ if "__version__" in dir() else "0.3.13"
     __samtools_version__ = None  # rubam doesn't ship samtools
 
 version = _VersionShim()
 
 
-__version__ = "0.3.12"
+__version__ = "0.3.13"
 __all__ = [
     "AlignedSegment",
     "AlignmentFile",
